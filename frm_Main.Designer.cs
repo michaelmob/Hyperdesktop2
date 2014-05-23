@@ -392,6 +392,7 @@ namespace hyperdesktop2
 			this.Controls.Add(this.group_screenshot);
 			this.Controls.Add(this.group_upload);
 			this.Controls.Add(this.main_menu);
+			this.DoubleBuffered = true;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.main_menu;
 			this.MaximizeBox = false;
@@ -400,6 +401,7 @@ namespace hyperdesktop2
 			this.Name = "frm_Main";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Hyperdesktop2";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Frm_MainFormClosing);
 			this.Load += new System.EventHandler(this.Frm_MainLoad);
 			this.main_menu.ResumeLayout(false);
 			this.main_menu.PerformLayout();

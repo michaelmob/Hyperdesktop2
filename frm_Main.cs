@@ -80,15 +80,15 @@ namespace hyperdesktop2
 	    {
 			switch(e.Key) {
 				case Keys.D3:
-					btn_capture.PerformClick();
+					screen_capture("screen");
 					break;
 					
 				case Keys.D4:
-					btn_capture_selected_area.PerformClick();
+					screen_capture("region");
 					break;
 					
 				case Keys.D5:
-					Btn_windowClick();
+					screen_capture("window");
 					break;
 			}
 	    }
@@ -99,6 +99,12 @@ namespace hyperdesktop2
 			tray_icon.Visible = true;
 			
 			Snipper.initialize();
+		}
+		
+		void Frm_MainFormClosing(object sender, FormClosingEventArgs e)
+		{
+			inverse_tray_options(sender, e);
+			e.Cancel = true;
 		}
 		#endregion
 		
@@ -145,8 +151,29 @@ namespace hyperdesktop2
 			}
 		}
 		
-		void work_image(Bitmap bmp) {
-
+		void screen_capture(String type)
+		{
+			Bitmap bmp = null;
+			
+			switch(type) {
+				case "screen":
+					bmp = Screen_Capture.screen(Settings.show_cursor);
+					break;
+					
+				case "window":
+					bmp = Screen_Capture.window(Settings.show_cursor);
+					break;
+					
+				default:
+					bmp = Screen_Capture.region(Snipper.get_region());
+					break;
+			}
+			
+			work_image(bmp);
+		}
+		
+		void work_image(Bitmap bmp) 
+		{
 			Global_Func.play_sound("capture.wav");
 			
 			bmp = edit_screenshot(bmp);
@@ -160,23 +187,9 @@ namespace hyperdesktop2
 			save_screenshot(bmp);
 		}
 		
-		void Btn_windowClick()
-		{
-			Bitmap bmp = Screen_Capture.window();
-			work_image(bmp);
-		}
-		
-		void Btn_captureClick(object sender, EventArgs e)
-		{
-			Bitmap bmp = Screen_Capture.screen(Settings.show_cursor);
-			work_image(bmp);
-		}
-		
-		void Btn_capture_regionClick(object sender, EventArgs e)
-		{
-			Bitmap bmp = Screen_Capture.region(Snipper.get_region());
-			work_image(bmp);
-		}
+		void Btn_captureClick(object sender, EventArgs e) 			{ screen_capture("screen"); }
+		void Btn_windowClick() 										{ screen_capture("window"); }
+		void Btn_capture_regionClick(object sender, EventArgs e) 	{ screen_capture("region"); }
 		#endregion
 		
 		#region Main Menu
@@ -198,7 +211,8 @@ namespace hyperdesktop2
 		void inverse_tray_options(object sender, EventArgs e) {
 			minimizeToTrayToolStripMenuItem.Text = (minimizeToTrayToolStripMenuItem.Text == "Open Window") ? "Minimize to Tray" : "Open Window";
 			
-			this.Visible = !this.Visible;
+			ShowInTaskbar = !ShowInTaskbar;
+			Opacity = Opacity < 1 ? 100 : 0;
 		}
 		#endregion
 		
