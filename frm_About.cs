@@ -21,5 +21,9 @@ namespace hyperdesktop2
 		{
 			Process.Start("https://github.com/TheTarkus/Hyperdesktop2/issues");
 		}
+		void Frm_AboutLoad(object sender, System.EventArgs e)
+		{
+			label_build.Text = "Build: " + Settings.build;
+		}
 	}
 }

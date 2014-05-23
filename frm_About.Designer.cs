@@ -40,7 +40,7 @@ namespace hyperdesktop2
 			this.label_Hyperdesktop = new System.Windows.Forms.Label();
 			this.label_motto = new System.Windows.Forms.Label();
 			this.btn_github = new System.Windows.Forms.Button();
-			this.label_version = new System.Windows.Forms.Label();
+			this.label_build = new System.Windows.Forms.Label();
 			this.btn_report = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
@@ -77,15 +77,15 @@ namespace hyperdesktop2
 			this.btn_github.UseVisualStyleBackColor = true;
 			this.btn_github.Click += new System.EventHandler(this.Btn_githubClick);
 			// 
-			// label_version
+			// label_build
 			// 
-			this.label_version.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label_version.Location = new System.Drawing.Point(12, 94);
-			this.label_version.Name = "label_version";
-			this.label_version.Size = new System.Drawing.Size(88, 26);
-			this.label_version.TabIndex = 3;
-			this.label_version.Text = "Version: 1.0.0";
-			this.label_version.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label_build.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label_build.Location = new System.Drawing.Point(12, 94);
+			this.label_build.Name = "label_build";
+			this.label_build.Size = new System.Drawing.Size(88, 26);
+			this.label_build.TabIndex = 3;
+			this.label_build.Text = "Build: 0";
+			this.label_build.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// btn_report
 			// 
@@ -103,7 +103,7 @@ namespace hyperdesktop2
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(402, 126);
 			this.Controls.Add(this.btn_report);
-			this.Controls.Add(this.label_version);
+			this.Controls.Add(this.label_build);
 			this.Controls.Add(this.btn_github);
 			this.Controls.Add(this.label_motto);
 			this.Controls.Add(this.label_Hyperdesktop);
@@ -113,9 +113,10 @@ namespace hyperdesktop2
 			this.Name = "frm_About";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "About Hyperdesktop2";
+			this.Load += new System.EventHandler(this.Frm_AboutLoad);
 			this.ResumeLayout(false);
 		}
-		private System.Windows.Forms.Label label_version;
+		private System.Windows.Forms.Label label_build;
 		private System.Windows.Forms.Button btn_report;
 		private System.Windows.Forms.Label label_Hyperdesktop;
 		private System.Windows.Forms.Label label_motto;

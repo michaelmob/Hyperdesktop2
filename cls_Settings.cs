@@ -7,8 +7,9 @@ namespace hyperdesktop2
 	public static class Settings
 	{
 		// Unused
-		public static Int32 build = 1;
+		public static Int32 build = 3;
 		public static String build_url = "https://raw.githubusercontent.com/TheTarkus/Hyperdesktop2/master/BUILD";
+		public static String release_url = "https://github.com/TheTarkus/Hyperdesktop2/releases";
 		
 		public static String app_data = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Hyperdesktop2\";
 		public static String exe_path = app_data + @"hyperdesktop2.exe";
@@ -38,6 +39,8 @@ namespace hyperdesktop2
 			return (str.Length > 0) ? Read(section, key) : Write(section, key, value);
 		}
 		
+		public static String settings_build;
+		
 		public static String imgur_client_id;
 		
 		public static Boolean save_screenshots;
@@ -59,7 +62,9 @@ namespace hyperdesktop2
 		public static void get_settings()
 		{
 			Global_Func.app_data_folder_create();
-			imgur_client_id				= Exists("upload", "imgur_client_id", "84c55d06b4c9686");
+			settings_build			= Exists("hyperdesktop2", "build", Convert.ToString(build));
+			
+			imgur_client_id			= Exists("upload", "imgur_client_id", "84c55d06b4c9686");
 				
 			save_screenshots		= Global_Func.str_to_bool(Exists("general", "save_screenshots", "false"));
 			save_folder				= Exists("general", "save_folder", Environment.CurrentDirectory + "\\captures\\");

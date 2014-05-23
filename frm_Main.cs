@@ -46,11 +46,26 @@ namespace hyperdesktop2
 		public frm_Main()
 		{
 			InitializeComponent();
+			
+			// Delete older executable on update
+			try {
+				if(Convert.ToInt32(Settings.Read("hyperdesktop2", "build")) < Settings.build) {
+					File.Delete(Settings.exe_path);
+					Settings.Write("hyperdesktop2", "build", Settings.build.ToString());
+				}
+			} catch (Exception ex) {
+				Console.WriteLine("Couldn't delete old hyperdesktop2 executable.");
+				Console.WriteLine(ex.Message);
+			}
+			
 			Global_Func.app_data_folder_create();
 			Global_Func.copy_files();
 			
+			var web_client = new WebClient();
+			Int32 build = Convert.ToInt32(web_client.DownloadString(Settings.build_url));
+			
 			// Confirm if user wants to add to system startup
-			// on first rnu
+			// on first run
 			if(!File.Exists(Settings.ini_path)) {
 				DialogResult result = MessageBox.Show(
 					"Do you want to run Hyperdesktop2 at Windows startup?",
@@ -62,6 +77,21 @@ namespace hyperdesktop2
 				
 				if(result == DialogResult.Yes)
 					Global_Func.run_at_startup(true);
+			}
+			// Update notification
+			else if(build > Settings.build) {
+				DialogResult result = MessageBox.Show(
+					"A new version of Hyperdesktop2 has been released. Would you like to download it?",
+					"Update available",
+					MessageBoxButtons.YesNo,
+					MessageBoxIcon.Question,
+					MessageBoxDefaultButton.Button1
+				);
+				
+				if(result == DialogResult.Yes) {
+					Process.Start(Settings.release_url);
+					Process.GetCurrentProcess().Kill();
+				}
 			}
 	
 			var hook = new Hotkeys();
