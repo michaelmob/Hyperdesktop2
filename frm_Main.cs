@@ -46,8 +46,12 @@ namespace hyperdesktop2
 		public frm_Main()
 		{
 			InitializeComponent();
+			Global_Func.app_data_folder_create();
+			Global_Func.copy_files();
 			
-			if(!File.Exists(Environment.CurrentDirectory + "/hyperdesktop2.ini")) {
+			// Confirm if user wants to add to system startup
+			// on first rnu
+			if(!File.Exists(Settings.ini_path)) {
 				DialogResult result = MessageBox.Show(
 					"Do you want to run Hyperdesktop2 at Windows startup?",
 					"First time run",
@@ -130,10 +134,15 @@ namespace hyperdesktop2
 			if(name == null)
 				name = DateTime.Now.ToString("yyyy-MM-dd_HHmmss");
 			
-			bmp.Save(
-				String.Format("{0}/{1}.{2}", Settings.save_folder, name, Settings.save_format),
-				Global_Func.ext_to_imageformat(Settings.save_format)
-			);
+			try {
+				bmp.Save(
+					String.Format("{0}/{1}.{2}", Settings.save_folder, name, Settings.save_format),
+					Global_Func.ext_to_imageformat(Settings.save_format)
+				);
+			} catch (Exception ex) {
+				Console.WriteLine("Cannot save image.");
+				Console.WriteLine(ex.Message);
+			}
 		}
 		
 		void work_image(Bitmap bmp) {

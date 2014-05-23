@@ -6,7 +6,13 @@ namespace hyperdesktop2
 {
 	public static class Settings
 	{
-		static String path = String.Format(@"{0}\hyperdesktop2.ini", Environment.CurrentDirectory);
+		// Unused
+		public static Int32 build = 1;
+		public static String build_url = "https://raw.githubusercontent.com/TheTarkus/Hyperdesktop2/master/BUILD";
+		
+		public static String app_data = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Hyperdesktop2\";
+		public static String exe_path = app_data + @"hyperdesktop2.exe";
+		public static String ini_path = app_data + @"hyperdesktop2.ini";
 		
 		[DllImport("kernel32")]
 	    static extern long WritePrivateProfileString(String section, String key, String val, String filePath);
@@ -15,14 +21,14 @@ namespace hyperdesktop2
 	
 	    public static String Write(String section, String key, String value)
 	    {
-	        WritePrivateProfileString(section, key, value, path);
+	        WritePrivateProfileString(section, key, value, ini_path);
 			return value;
 	    }
 	
 	    public static String Read(String section, String key)
 	    {
 	        var temp = new StringBuilder(255);
-	        int i = GetPrivateProfileString(section, key, "", temp, 255, path);
+	        int i = GetPrivateProfileString(section, key, "", temp, 255, ini_path);
 	        return temp.ToString();
 	    }
 	
@@ -52,10 +58,11 @@ namespace hyperdesktop2
 		
 		public static void get_settings()
 		{
+			Global_Func.app_data_folder_create();
 			imgur_client_id				= Exists("upload", "imgur_client_id", "84c55d06b4c9686");
 				
 			save_screenshots		= Global_Func.str_to_bool(Exists("general", "save_screenshots", "false"));
-			save_folder				= Exists("general", "save_folder", "/captures/");
+			save_folder				= Exists("general", "save_folder", Environment.CurrentDirectory + "\\captures\\");
 			save_format 			= Exists("general", "save_format", "png");
 			save_quality 			= Convert.ToInt16(Exists("general", "save_quality", "100"));
 			

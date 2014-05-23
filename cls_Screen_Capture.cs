@@ -24,7 +24,7 @@ public static class Screen_Capture
 	[DllImport("user32.dll")]
 	static extern bool GetWindowRect(IntPtr hwnd, ref Rectangle rectangle);
 
-	public static Bitmap region(Rectangle area, bool cursor = true, PixelFormat pixel_format = PixelFormat.Format16bppRgb555)
+	public static Bitmap region(Rectangle area, bool cursor = true, PixelFormat pixel_format = PixelFormat.Format32bppRgb)
 	{
 		Bitmap bmp;
 		
@@ -52,12 +52,12 @@ public static class Screen_Capture
 		return bmp;
 	}
 	
-	public static Bitmap screen(bool cursor = true, PixelFormat pixel_format = PixelFormat.Format16bppRgb555)
+	public static Bitmap screen(bool cursor = true, PixelFormat pixel_format = PixelFormat.Format32bppRgb)
 	{
 		return region(Screen.PrimaryScreen.Bounds, cursor, pixel_format);
 	}
 	
-	public static Bitmap window(bool cursor = true, PixelFormat pixel_format = PixelFormat.Format16bppRgb555)
+	public static Bitmap window(bool cursor = true, PixelFormat pixel_format = PixelFormat.Format32bppRgb)
 	{
 		var rect = new Rectangle();
 		GetWindowRect(GetForegroundWindow(), ref rect);
