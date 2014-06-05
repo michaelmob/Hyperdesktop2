@@ -7,7 +7,7 @@ namespace hyperdesktop2
 	public static class Settings
 	{
 		// Unused
-		public static Int32 build = 3;
+		public static Int32 build = 4;
 		public static String build_url = "https://raw.githubusercontent.com/TheTarkus/Hyperdesktop2/master/BUILD";
 		public static String release_url = "https://github.com/TheTarkus/Hyperdesktop2/releases";
 		

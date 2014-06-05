@@ -42,8 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cls_Global_Func.cs" />
-    <Compile Include="cls_Screen_Capture.cs" />
     <Compile Include="cls_Hotkeys.cs" />
+    <Compile Include="cls_Screen_Capture.cs" />
     <Compile Include="cls_Settings.cs" />
     <Compile Include="cls_Snipper.cs" />
     <Compile Include="cls_Upload.cs" />

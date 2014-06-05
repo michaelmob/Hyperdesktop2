@@ -13,35 +13,9 @@ namespace hyperdesktop2
 	
 	public partial class frm_Main : Form
 	{
-		
-		#region Tray Icon
-		void balloon_tip(String text, String title, Int32 duration, ToolTipIcon icon = ToolTipIcon.Info) {
-			tray_icon.BalloonTipText = text;
-			tray_icon.BalloonTipTitle = title;
-			tray_icon.BalloonTipIcon = icon;
-			tray_icon.ShowBalloonTip(duration);
-		}
-		void Tray_iconBalloonTipClicked(object sender, System.EventArgs e)
-		{
-			Process.Start(tray_icon.BalloonTipText);
-		}
-		#endregion
-		
-		#region Drag and Drop
-		void drag_enter(object sender, DragEventArgs e)
-		{
-			e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Move : DragDropEffects.None;
-		}
-		void drag_drop(object sender, DragEventArgs e)
-		{
-			var files = (String[])e.Data.GetData(DataFormats.FileDrop);
-			
-			foreach(String file in files) {
-				work_image(new Bitmap(Image.FromFile(file)));
-			}
-		}
-		#endregion
-		
+		Hotkeys hook;
+		Boolean snipper_open;
+				
 		#region Main Form
 		public frm_Main()
 		{
@@ -93,8 +67,57 @@ namespace hyperdesktop2
 					Process.GetCurrentProcess().Kill();
 				}
 			}
-	
-			var hook = new Hotkeys();
+			
+			register_hotkeys();
+		}
+		
+		void Frm_MainLoad(object sender, EventArgs e)
+		{
+			Settings.get_settings();
+			tray_icon.Visible = true;
+			
+			Snipper.initialize();
+		}
+		
+		void Frm_MainFormClosing(object sender, FormClosingEventArgs e)
+		{
+			inverse_tray_options(sender, e);
+			e.Cancel = true;
+		}
+		#endregion
+		
+		#region Tray Icon
+		void balloon_tip(String text, String title, Int32 duration, ToolTipIcon icon = ToolTipIcon.Info) {
+			tray_icon.BalloonTipText = text;
+			tray_icon.BalloonTipTitle = title;
+			tray_icon.BalloonTipIcon = icon;
+			tray_icon.ShowBalloonTip(duration);
+		}
+		void Tray_iconBalloonTipClicked(object sender, System.EventArgs e)
+		{
+			Process.Start(tray_icon.BalloonTipText);
+		}
+		#endregion
+		
+		#region Drag and Drop
+		void drag_enter(object sender, DragEventArgs e)
+		{
+			e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Move : DragDropEffects.None;
+		}
+		void drag_drop(object sender, DragEventArgs e)
+		{
+			var files = (String[])e.Data.GetData(DataFormats.FileDrop);
+			
+			foreach(String file in files) {
+				work_image(new Bitmap(Image.FromFile(file)));
+			}
+		}
+		#endregion
+		
+		#region Hotkeys
+		public void register_hotkeys()
+		{
+			hook = new Hotkeys();
 			hook.KeyPressed += hook_KeyPressed;
 			
 			try {
@@ -102,7 +125,7 @@ namespace hyperdesktop2
 				hook.RegisterHotKey(global::ModifierKeys.Control | global::ModifierKeys.Shift, Keys.D4);
 				hook.RegisterHotKey(global::ModifierKeys.Control | global::ModifierKeys.Shift, Keys.D5);
 			} catch {
-				MessageBox.Show("Couldn't register hotkeys. Try running as an Administrator.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("Couldn't register hotkeys. Perhaps they are already in use or try running as an Administrator.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 		
@@ -122,20 +145,6 @@ namespace hyperdesktop2
 					break;
 			}
 	    }
-		
-		void Frm_MainLoad(object sender, EventArgs e)
-		{
-			Settings.get_settings();
-			tray_icon.Visible = true;
-			
-			Snipper.initialize();
-		}
-		
-		void Frm_MainFormClosing(object sender, FormClosingEventArgs e)
-		{
-			inverse_tray_options(sender, e);
-			e.Cancel = true;
-		}
 		#endregion
 		
 		#region Upload Images
@@ -195,10 +204,14 @@ namespace hyperdesktop2
 					break;
 					
 				default:
+					if(snipper_open)
+						return;
+					
+					snipper_open = true;
 					bmp = Screen_Capture.region(Snipper.get_region());
+					snipper_open = false;
 					break;
 			}
-			
 			work_image(bmp);
 		}
 		
@@ -234,6 +247,10 @@ namespace hyperdesktop2
 		void AboutToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			new frm_About().ShowDialog();
+		}
+		void RegisterHotkeysToolStripMenuItemClick(object sender, System.EventArgs e)
+		{
+			register_hotkeys();
 		}
 		#endregion
 		
@@ -272,7 +289,6 @@ namespace hyperdesktop2
 		{
 			try {
 				var web_client = new WebClient();
-				
 				var data = new NameValueCollection();
 				
 				web_client.UploadProgressChanged += upload_progress_changed;
@@ -321,11 +337,12 @@ namespace hyperdesktop2
 			}
 		}
 		
-		void upload_progress_changed(object sender, ProgressChangedEventArgs e)
+		void upload_progress_changed(object sender, UploadProgressChangedEventArgs e)
 		{
 			try {
-				group_upload_progress.Text = String.Format("Upload Progress - {0}%", e.ProgressPercentage);
-				progress.Value = e.ProgressPercentage;
+				Int32 percent = Convert.ToInt32(e.BytesSent / e.TotalBytesToSend) * 100;
+				group_upload_progress.Text = String.Format("Upload Progress - {0}% ({1}kb/{2}kb)", percent, e.BytesSent / 1024, e.TotalBytesToSend / 1024d);
+				progress.Value = percent;
 			} catch {
 				// below .NET 4.0, sometimes it throws an absurd
 				// number into the ProgressPercentage
@@ -345,6 +362,8 @@ namespace hyperdesktop2
 			list_image_links.Items.Add(
 				new ListViewItem(new String[] {link, delete_hash})
 			);
+			
+			list_image_links.Items[list_image_links.Items.Count-1].EnsureVisible();
 			
 			if(Settings.copy_links_to_clipboard)
 				Clipboard.SetText(link);

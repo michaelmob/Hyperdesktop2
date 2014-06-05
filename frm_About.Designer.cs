@@ -69,6 +69,7 @@ namespace hyperdesktop2
 			// 
 			// btn_github
 			// 
+			this.btn_github.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.btn_github.Location = new System.Drawing.Point(293, 93);
 			this.btn_github.Name = "btn_github";
 			this.btn_github.Size = new System.Drawing.Size(97, 26);
@@ -89,6 +90,7 @@ namespace hyperdesktop2
 			// 
 			// btn_report
 			// 
+			this.btn_report.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.btn_report.Location = new System.Drawing.Point(190, 94);
 			this.btn_report.Name = "btn_report";
 			this.btn_report.Size = new System.Drawing.Size(97, 26);

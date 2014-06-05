@@ -71,6 +71,7 @@ namespace hyperdesktop2
 			this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tray_icon = new System.Windows.Forms.NotifyIcon(this.components);
+			this.registerHotkeysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.main_menu.SuspendLayout();
 			this.group_upload.SuspendLayout();
 			this.group_screenshot.SuspendLayout();
@@ -105,14 +106,14 @@ namespace hyperdesktop2
 			// hideWindowToolStripMenuItem
 			// 
 			this.hideWindowToolStripMenuItem.Name = "hideWindowToolStripMenuItem";
-			this.hideWindowToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+			this.hideWindowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.hideWindowToolStripMenuItem.Text = "Hide Window";
 			this.hideWindowToolStripMenuItem.Click += new System.EventHandler(this.inverse_tray_options);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItemClick);
 			// 
@@ -127,14 +128,15 @@ namespace hyperdesktop2
 			// preferencesToolStripMenuItem
 			// 
 			this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-			this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+			this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.preferencesToolStripMenuItem.Text = "Preferences";
 			this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.PreferencesToolStripMenuItemClick);
 			// 
 			// helpToolStripMenuItem
 			// 
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.aboutToolStripMenuItem});
+			this.aboutToolStripMenuItem,
+			this.registerHotkeysToolStripMenuItem});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.helpToolStripMenuItem.Text = "Help";
@@ -142,7 +144,7 @@ namespace hyperdesktop2
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
 			this.aboutToolStripMenuItem.Text = "About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
 			// 
@@ -382,6 +384,13 @@ namespace hyperdesktop2
 			this.tray_icon.BalloonTipClicked += new System.EventHandler(this.Tray_iconBalloonTipClicked);
 			this.tray_icon.DoubleClick += new System.EventHandler(this.inverse_tray_options);
 			// 
+			// registerHotkeysToolStripMenuItem
+			// 
+			this.registerHotkeysToolStripMenuItem.Name = "registerHotkeysToolStripMenuItem";
+			this.registerHotkeysToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+			this.registerHotkeysToolStripMenuItem.Text = "Register Hotkeys";
+			this.registerHotkeysToolStripMenuItem.Click += new System.EventHandler(this.RegisterHotkeysToolStripMenuItemClick);
+			// 
 			// frm_Main
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -414,6 +423,7 @@ namespace hyperdesktop2
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripMenuItem registerHotkeysToolStripMenuItem;
 		private System.Windows.Forms.ContextMenuStrip image_links_menu;
 		private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
