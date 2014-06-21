@@ -59,6 +59,9 @@ namespace hyperdesktop2
 		public static Boolean launch_browser;
 		public static Boolean edit_screenshot;
 		
+		public static Boolean auto_detect_screen_res;
+		public static String screen_res;
+		
 		public static void get_settings()
 		{
 			Global_Func.app_data_folder_create();
@@ -80,6 +83,8 @@ namespace hyperdesktop2
 			balloon_messages 		= Global_Func.str_to_bool(Exists("behavior", "balloon_messages", "true"));
 			launch_browser 			= Global_Func.str_to_bool(Exists("behavior", "launch_browser", "false"));
 			edit_screenshot 		= Global_Func.str_to_bool(Exists("behavior", "edit_screenshot", "true"));
+			
+			screen_res 				= Exists("screen", "screen_res", Snipper.reset_screen_bounds());
 		}
 		
 		public static void write_settings()
@@ -97,6 +102,8 @@ namespace hyperdesktop2
 			Write("behavior", 	"balloon_messages", 		balloon_messages.ToString());
 			Write("behavior", 	"launch_browser", 			launch_browser.ToString());
 			Write("behavior", 	"edit_screenshot", 			edit_screenshot.ToString());
+			
+			Write("screen", 	"screen_res",			 	screen_res);
 		}
 		
 	}

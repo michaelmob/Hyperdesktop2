@@ -28,7 +28,7 @@ namespace hyperdesktop2
 			undo = new List<Bitmap>();
 			undo.Add(new Bitmap(_bmp));
 			
-			font = (_font != null) ? _font : new Font("Arial", 16);
+			font = _font ?? new Font("Arial", 16) ;
 			check_drop_shadow.Checked = _drop_shadow;
 		}
 		

@@ -28,11 +28,37 @@ namespace hyperdesktop2
 			check_balloon.Checked 				= Settings.balloon_messages;
 			check_launch_browser.Checked 		= Settings.launch_browser;
 			check_edit_screenshot.Checked 		= Settings.edit_screenshot;
+		
+			numeric_top.Minimum = -50000;
+			numeric_left.Minimum = -50000;
+			numeric_width.Minimum = -50000;
+			numeric_height.Minimum = -50000;
+			
+			try {
+				String[] screen_res = Settings.screen_res.Split(',');
+				numeric_top.Value = Convert.ToDecimal(screen_res[0]);
+				numeric_left.Value = Convert.ToDecimal(screen_res[1]);
+				numeric_width.Value = Convert.ToDecimal(screen_res[2]);
+				numeric_height.Value = Convert.ToDecimal(screen_res[3]);
+			} catch {
+				btn_reset_screen.PerformClick();
+			}
 		}
 		
 		#region Save & Cancel
 		void Btn_saveClick(object sender, EventArgs e)
 		{
+			// Screen resolution
+			Settings.screen_res 				= Settings.screen_res = String.Format(
+				"{0},{1},{2},{3}",
+				numeric_top.Value,
+				numeric_left.Value,
+				numeric_width.Value,
+				numeric_height.Value
+			);
+			
+			Snipper.load_screen_bounds();
+			
 			Settings.save_screenshots 			= check_save_screenshots.Checked;
 			Settings.save_folder 				= txt_save_folder.Text;
 			Settings.save_format 				= drop_save_format.Text;
@@ -71,6 +97,14 @@ namespace hyperdesktop2
 			var browse_folder = new FolderBrowserDialog();
 			if (browse_folder.ShowDialog() == DialogResult.OK)
 			    txt_save_folder.Text = browse_folder.SelectedPath;
+		}
+		void Btn_reset_screenClick(object sender, System.EventArgs e)
+		{
+			String[] screen_res = Snipper.reset_screen_bounds().Split(',');
+			numeric_top.Value = Convert.ToDecimal(screen_res[0]);
+			numeric_left.Value = Convert.ToDecimal(screen_res[1]);
+			numeric_width.Value = Convert.ToDecimal(screen_res[2]);
+			numeric_height.Value = Convert.ToDecimal(screen_res[3]);
 		}
 		#endregion
 	}

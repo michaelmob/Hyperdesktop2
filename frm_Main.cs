@@ -76,6 +76,7 @@ namespace hyperdesktop2
 			Settings.get_settings();
 			tray_icon.Visible = true;
 			
+			Snipper.load_screen_bounds();
 			Snipper.initialize();
 		}
 		

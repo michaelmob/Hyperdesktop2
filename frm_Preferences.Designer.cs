@@ -61,12 +61,12 @@ namespace hyperdesktop2
 			this.label_update_format = new System.Windows.Forms.Label();
 			this.tab_hotkeys = new System.Windows.Forms.TabPage();
 			this.textBox3 = new System.Windows.Forms.TextBox();
-			this.label2 = new System.Windows.Forms.Label();
+			this.label_window_screenshot = new System.Windows.Forms.Label();
 			this.checkBox6 = new System.Windows.Forms.CheckBox();
 			this.checkBox7 = new System.Windows.Forms.CheckBox();
 			this.checkBox8 = new System.Windows.Forms.CheckBox();
 			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.label1 = new System.Windows.Forms.Label();
+			this.label_region_screenshot = new System.Windows.Forms.Label();
 			this.checkBox3 = new System.Windows.Forms.CheckBox();
 			this.checkBox4 = new System.Windows.Forms.CheckBox();
 			this.checkBox5 = new System.Windows.Forms.CheckBox();
@@ -76,6 +76,16 @@ namespace hyperdesktop2
 			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.check_screenshot_ctrl = new System.Windows.Forms.CheckBox();
 			this.label_hotkeys_instructions = new System.Windows.Forms.Label();
+			this.tab_screens = new System.Windows.Forms.TabPage();
+			this.btn_reset_screen = new System.Windows.Forms.Button();
+			this.numeric_height = new System.Windows.Forms.NumericUpDown();
+			this.numeric_width = new System.Windows.Forms.NumericUpDown();
+			this.numeric_left = new System.Windows.Forms.NumericUpDown();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label_screen_y = new System.Windows.Forms.Label();
+			this.numeric_top = new System.Windows.Forms.NumericUpDown();
+			this.label_screen_x = new System.Windows.Forms.Label();
 			this.btn_save = new System.Windows.Forms.Button();
 			this.btn_cancel = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
@@ -83,6 +93,11 @@ namespace hyperdesktop2
 			this.tab_behavior.SuspendLayout();
 			this.tab_uploading.SuspendLayout();
 			this.tab_hotkeys.SuspendLayout();
+			this.tab_screens.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numeric_height)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numeric_width)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numeric_left)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numeric_top)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabControl1
@@ -94,6 +109,7 @@ namespace hyperdesktop2
 			this.tabControl1.Controls.Add(this.tab_behavior);
 			this.tabControl1.Controls.Add(this.tab_uploading);
 			this.tabControl1.Controls.Add(this.tab_hotkeys);
+			this.tabControl1.Controls.Add(this.tab_screens);
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
@@ -352,12 +368,12 @@ namespace hyperdesktop2
 			// tab_hotkeys
 			// 
 			this.tab_hotkeys.Controls.Add(this.textBox3);
-			this.tab_hotkeys.Controls.Add(this.label2);
+			this.tab_hotkeys.Controls.Add(this.label_window_screenshot);
 			this.tab_hotkeys.Controls.Add(this.checkBox6);
 			this.tab_hotkeys.Controls.Add(this.checkBox7);
 			this.tab_hotkeys.Controls.Add(this.checkBox8);
 			this.tab_hotkeys.Controls.Add(this.textBox2);
-			this.tab_hotkeys.Controls.Add(this.label1);
+			this.tab_hotkeys.Controls.Add(this.label_region_screenshot);
 			this.tab_hotkeys.Controls.Add(this.checkBox3);
 			this.tab_hotkeys.Controls.Add(this.checkBox4);
 			this.tab_hotkeys.Controls.Add(this.checkBox5);
@@ -378,21 +394,21 @@ namespace hyperdesktop2
 			// textBox3
 			// 
 			this.textBox3.Enabled = false;
-			this.textBox3.Location = new System.Drawing.Point(300, 88);
+			this.textBox3.Location = new System.Drawing.Point(300, 95);
 			this.textBox3.Name = "textBox3";
 			this.textBox3.ReadOnly = true;
 			this.textBox3.Size = new System.Drawing.Size(30, 20);
 			this.textBox3.TabIndex = 15;
 			this.textBox3.Text = "5";
 			// 
-			// label2
+			// label_window_screenshot
 			// 
-			this.label2.Location = new System.Drawing.Point(8, 86);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(140, 23);
-			this.label2.TabIndex = 14;
-			this.label2.Text = "3. Take window screenshot";
-			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.label_window_screenshot.Location = new System.Drawing.Point(8, 93);
+			this.label_window_screenshot.Name = "label_window_screenshot";
+			this.label_window_screenshot.Size = new System.Drawing.Size(140, 23);
+			this.label_window_screenshot.TabIndex = 14;
+			this.label_window_screenshot.Text = "3. Take window screenshot";
+			this.label_window_screenshot.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// checkBox6
 			// 
@@ -401,7 +417,7 @@ namespace hyperdesktop2
 			this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.checkBox6.Enabled = false;
 			this.checkBox6.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.checkBox6.Location = new System.Drawing.Point(247, 86);
+			this.checkBox6.Location = new System.Drawing.Point(247, 93);
 			this.checkBox6.Name = "checkBox6";
 			this.checkBox6.Size = new System.Drawing.Size(47, 24);
 			this.checkBox6.TabIndex = 13;
@@ -413,7 +429,7 @@ namespace hyperdesktop2
 			this.checkBox7.Appearance = System.Windows.Forms.Appearance.Button;
 			this.checkBox7.Enabled = false;
 			this.checkBox7.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.checkBox7.Location = new System.Drawing.Point(202, 86);
+			this.checkBox7.Location = new System.Drawing.Point(202, 93);
 			this.checkBox7.Name = "checkBox7";
 			this.checkBox7.Size = new System.Drawing.Size(39, 24);
 			this.checkBox7.TabIndex = 12;
@@ -427,7 +443,7 @@ namespace hyperdesktop2
 			this.checkBox8.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.checkBox8.Enabled = false;
 			this.checkBox8.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.checkBox8.Location = new System.Drawing.Point(154, 86);
+			this.checkBox8.Location = new System.Drawing.Point(154, 93);
 			this.checkBox8.Name = "checkBox8";
 			this.checkBox8.Size = new System.Drawing.Size(42, 24);
 			this.checkBox8.TabIndex = 11;
@@ -437,21 +453,21 @@ namespace hyperdesktop2
 			// textBox2
 			// 
 			this.textBox2.Enabled = false;
-			this.textBox2.Location = new System.Drawing.Point(300, 58);
+			this.textBox2.Location = new System.Drawing.Point(300, 65);
 			this.textBox2.Name = "textBox2";
 			this.textBox2.ReadOnly = true;
 			this.textBox2.Size = new System.Drawing.Size(30, 20);
 			this.textBox2.TabIndex = 10;
 			this.textBox2.Text = "4";
 			// 
-			// label1
+			// label_region_screenshot
 			// 
-			this.label1.Location = new System.Drawing.Point(8, 56);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(140, 23);
-			this.label1.TabIndex = 9;
-			this.label1.Text = "2. Take region screenshot:";
-			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.label_region_screenshot.Location = new System.Drawing.Point(8, 63);
+			this.label_region_screenshot.Name = "label_region_screenshot";
+			this.label_region_screenshot.Size = new System.Drawing.Size(140, 23);
+			this.label_region_screenshot.TabIndex = 9;
+			this.label_region_screenshot.Text = "2. Take region screenshot:";
+			this.label_region_screenshot.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// checkBox3
 			// 
@@ -460,7 +476,7 @@ namespace hyperdesktop2
 			this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.checkBox3.Enabled = false;
 			this.checkBox3.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.checkBox3.Location = new System.Drawing.Point(247, 56);
+			this.checkBox3.Location = new System.Drawing.Point(247, 63);
 			this.checkBox3.Name = "checkBox3";
 			this.checkBox3.Size = new System.Drawing.Size(47, 24);
 			this.checkBox3.TabIndex = 8;
@@ -472,7 +488,7 @@ namespace hyperdesktop2
 			this.checkBox4.Appearance = System.Windows.Forms.Appearance.Button;
 			this.checkBox4.Enabled = false;
 			this.checkBox4.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.checkBox4.Location = new System.Drawing.Point(202, 56);
+			this.checkBox4.Location = new System.Drawing.Point(202, 63);
 			this.checkBox4.Name = "checkBox4";
 			this.checkBox4.Size = new System.Drawing.Size(39, 24);
 			this.checkBox4.TabIndex = 7;
@@ -486,7 +502,7 @@ namespace hyperdesktop2
 			this.checkBox5.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.checkBox5.Enabled = false;
 			this.checkBox5.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.checkBox5.Location = new System.Drawing.Point(154, 56);
+			this.checkBox5.Location = new System.Drawing.Point(154, 63);
 			this.checkBox5.Name = "checkBox5";
 			this.checkBox5.Size = new System.Drawing.Size(42, 24);
 			this.checkBox5.TabIndex = 6;
@@ -496,7 +512,7 @@ namespace hyperdesktop2
 			// textBox1
 			// 
 			this.textBox1.Enabled = false;
-			this.textBox1.Location = new System.Drawing.Point(300, 28);
+			this.textBox1.Location = new System.Drawing.Point(300, 35);
 			this.textBox1.Name = "textBox1";
 			this.textBox1.ReadOnly = true;
 			this.textBox1.Size = new System.Drawing.Size(30, 20);
@@ -505,7 +521,7 @@ namespace hyperdesktop2
 			// 
 			// label_screenshot
 			// 
-			this.label_screenshot.Location = new System.Drawing.Point(8, 26);
+			this.label_screenshot.Location = new System.Drawing.Point(8, 33);
 			this.label_screenshot.Name = "label_screenshot";
 			this.label_screenshot.Size = new System.Drawing.Size(140, 23);
 			this.label_screenshot.TabIndex = 4;
@@ -519,7 +535,7 @@ namespace hyperdesktop2
 			this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.checkBox2.Enabled = false;
 			this.checkBox2.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.checkBox2.Location = new System.Drawing.Point(247, 26);
+			this.checkBox2.Location = new System.Drawing.Point(247, 33);
 			this.checkBox2.Name = "checkBox2";
 			this.checkBox2.Size = new System.Drawing.Size(47, 24);
 			this.checkBox2.TabIndex = 3;
@@ -531,7 +547,7 @@ namespace hyperdesktop2
 			this.checkBox1.Appearance = System.Windows.Forms.Appearance.Button;
 			this.checkBox1.Enabled = false;
 			this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.checkBox1.Location = new System.Drawing.Point(202, 26);
+			this.checkBox1.Location = new System.Drawing.Point(202, 33);
 			this.checkBox1.Name = "checkBox1";
 			this.checkBox1.Size = new System.Drawing.Size(39, 24);
 			this.checkBox1.TabIndex = 2;
@@ -545,7 +561,7 @@ namespace hyperdesktop2
 			this.check_screenshot_ctrl.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.check_screenshot_ctrl.Enabled = false;
 			this.check_screenshot_ctrl.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.check_screenshot_ctrl.Location = new System.Drawing.Point(154, 26);
+			this.check_screenshot_ctrl.Location = new System.Drawing.Point(154, 33);
 			this.check_screenshot_ctrl.Name = "check_screenshot_ctrl";
 			this.check_screenshot_ctrl.Size = new System.Drawing.Size(42, 24);
 			this.check_screenshot_ctrl.TabIndex = 1;
@@ -554,12 +570,166 @@ namespace hyperdesktop2
 			// 
 			// label_hotkeys_instructions
 			// 
-			this.label_hotkeys_instructions.Location = new System.Drawing.Point(8, 3);
+			this.label_hotkeys_instructions.Location = new System.Drawing.Point(8, 6);
 			this.label_hotkeys_instructions.Name = "label_hotkeys_instructions";
 			this.label_hotkeys_instructions.Size = new System.Drawing.Size(322, 23);
 			this.label_hotkeys_instructions.TabIndex = 0;
 			this.label_hotkeys_instructions.Text = "Set your own hotkeys here.";
 			this.label_hotkeys_instructions.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// tab_screens
+			// 
+			this.tab_screens.Controls.Add(this.btn_reset_screen);
+			this.tab_screens.Controls.Add(this.numeric_height);
+			this.tab_screens.Controls.Add(this.numeric_width);
+			this.tab_screens.Controls.Add(this.numeric_left);
+			this.tab_screens.Controls.Add(this.label3);
+			this.tab_screens.Controls.Add(this.label2);
+			this.tab_screens.Controls.Add(this.label_screen_y);
+			this.tab_screens.Controls.Add(this.numeric_top);
+			this.tab_screens.Controls.Add(this.label_screen_x);
+			this.tab_screens.Location = new System.Drawing.Point(4, 22);
+			this.tab_screens.Name = "tab_screens";
+			this.tab_screens.Padding = new System.Windows.Forms.Padding(3);
+			this.tab_screens.Size = new System.Drawing.Size(344, 185);
+			this.tab_screens.TabIndex = 4;
+			this.tab_screens.Text = "Screen";
+			this.tab_screens.UseVisualStyleBackColor = true;
+			// 
+			// btn_reset_screen
+			// 
+			this.btn_reset_screen.FlatStyle = System.Windows.Forms.FlatStyle.System;
+			this.btn_reset_screen.Location = new System.Drawing.Point(51, 90);
+			this.btn_reset_screen.Name = "btn_reset_screen";
+			this.btn_reset_screen.Size = new System.Drawing.Size(120, 23);
+			this.btn_reset_screen.TabIndex = 10;
+			this.btn_reset_screen.Text = "Reset";
+			this.btn_reset_screen.UseVisualStyleBackColor = true;
+			this.btn_reset_screen.Click += new System.EventHandler(this.Btn_reset_screenClick);
+			// 
+			// numeric_height
+			// 
+			this.numeric_height.Location = new System.Drawing.Point(51, 70);
+			this.numeric_height.Maximum = new decimal(new int[] {
+			50000,
+			0,
+			0,
+			0});
+			this.numeric_height.Minimum = new decimal(new int[] {
+			50000,
+			0,
+			0,
+			-2147483648});
+			this.numeric_height.Name = "numeric_height";
+			this.numeric_height.Size = new System.Drawing.Size(120, 20);
+			this.numeric_height.TabIndex = 9;
+			this.numeric_height.Value = new decimal(new int[] {
+			50000,
+			0,
+			0,
+			0});
+			// 
+			// numeric_width
+			// 
+			this.numeric_width.Location = new System.Drawing.Point(51, 49);
+			this.numeric_width.Maximum = new decimal(new int[] {
+			50000,
+			0,
+			0,
+			0});
+			this.numeric_width.Minimum = new decimal(new int[] {
+			50000,
+			0,
+			0,
+			-2147483648});
+			this.numeric_width.Name = "numeric_width";
+			this.numeric_width.Size = new System.Drawing.Size(120, 20);
+			this.numeric_width.TabIndex = 8;
+			this.numeric_width.Value = new decimal(new int[] {
+			50000,
+			0,
+			0,
+			0});
+			// 
+			// numeric_left
+			// 
+			this.numeric_left.Location = new System.Drawing.Point(51, 28);
+			this.numeric_left.Maximum = new decimal(new int[] {
+			50000,
+			0,
+			0,
+			0});
+			this.numeric_left.Minimum = new decimal(new int[] {
+			50000,
+			0,
+			0,
+			-2147483648});
+			this.numeric_left.Name = "numeric_left";
+			this.numeric_left.Size = new System.Drawing.Size(120, 20);
+			this.numeric_left.TabIndex = 7;
+			this.numeric_left.Value = new decimal(new int[] {
+			50000,
+			0,
+			0,
+			0});
+			// 
+			// label3
+			// 
+			this.label3.Location = new System.Drawing.Point(6, 70);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(45, 17);
+			this.label3.TabIndex = 6;
+			this.label3.Text = "Height:";
+			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// label2
+			// 
+			this.label2.Location = new System.Drawing.Point(6, 49);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(45, 17);
+			this.label2.TabIndex = 5;
+			this.label2.Text = "Width:";
+			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// label_screen_y
+			// 
+			this.label_screen_y.Location = new System.Drawing.Point(6, 28);
+			this.label_screen_y.Name = "label_screen_y";
+			this.label_screen_y.Size = new System.Drawing.Size(45, 17);
+			this.label_screen_y.TabIndex = 4;
+			this.label_screen_y.Text = "Left:";
+			this.label_screen_y.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// numeric_top
+			// 
+			this.numeric_top.Location = new System.Drawing.Point(51, 7);
+			this.numeric_top.Maximum = new decimal(new int[] {
+			50000,
+			0,
+			0,
+			0});
+			this.numeric_top.Minimum = new decimal(new int[] {
+			50000,
+			0,
+			0,
+			-2147483648});
+			this.numeric_top.Name = "numeric_top";
+			this.numeric_top.Size = new System.Drawing.Size(120, 20);
+			this.numeric_top.TabIndex = 3;
+			this.numeric_top.Value = new decimal(new int[] {
+			50000,
+			0,
+			0,
+			0});
+			// 
+			// label_screen_x
+			// 
+			this.label_screen_x.Location = new System.Drawing.Point(6, 7);
+			this.label_screen_x.Name = "label_screen_x";
+			this.label_screen_x.Size = new System.Drawing.Size(45, 17);
+			this.label_screen_x.TabIndex = 2;
+			this.label_screen_x.Text = "Top:";
+			this.label_screen_x.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// btn_save
 			// 
@@ -607,8 +777,23 @@ namespace hyperdesktop2
 			this.tab_uploading.ResumeLayout(false);
 			this.tab_hotkeys.ResumeLayout(false);
 			this.tab_hotkeys.PerformLayout();
+			this.tab_screens.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.numeric_height)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numeric_width)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numeric_left)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numeric_top)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.Button btn_reset_screen;
+		private System.Windows.Forms.NumericUpDown numeric_height;
+		private System.Windows.Forms.NumericUpDown numeric_width;
+		private System.Windows.Forms.NumericUpDown numeric_left;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label label_screen_y;
+		private System.Windows.Forms.NumericUpDown numeric_top;
+		private System.Windows.Forms.Label label_screen_x;
+		private System.Windows.Forms.TabPage tab_screens;
 		private System.Windows.Forms.ComboBox drop_upload_method;
 		private System.Windows.Forms.Label label_upload_method;
 		private System.Windows.Forms.ComboBox drop_upload_format;
@@ -617,12 +802,12 @@ namespace hyperdesktop2
 		private System.Windows.Forms.Button btn_save;
 		private System.Windows.Forms.Button btn_cancel;
 		private System.Windows.Forms.TextBox textBox3;
-		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label label_window_screenshot;
 		private System.Windows.Forms.CheckBox checkBox6;
 		private System.Windows.Forms.CheckBox checkBox7;
 		private System.Windows.Forms.CheckBox checkBox8;
 		private System.Windows.Forms.TextBox textBox2;
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label label_region_screenshot;
 		private System.Windows.Forms.CheckBox checkBox3;
 		private System.Windows.Forms.CheckBox checkBox4;
 		private System.Windows.Forms.CheckBox checkBox5;
