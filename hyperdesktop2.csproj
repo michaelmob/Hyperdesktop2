@@ -43,25 +43,40 @@
   <ItemGroup>
     <Compile Include="cls_Global_Func.cs" />
     <Compile Include="cls_Hotkeys.cs" />
+    <Compile Include="cls_Imgur.cs" />
+    <Compile Include="cls_Screen_Bounds.cs" />
     <Compile Include="cls_Screen_Capture.cs" />
     <Compile Include="cls_Settings.cs" />
-    <Compile Include="cls_Snipper.cs" />
     <Compile Include="cls_Upload.cs" />
-    <Compile Include="frm_About.cs" />
+    <Compile Include="frm_About.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frm_About.Designer.cs">
       <DependentUpon>frm_About.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_Edit.cs" />
+    <Compile Include="frm_Edit.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frm_Edit.Designer.cs">
       <DependentUpon>frm_Edit.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_Main.cs" />
+    <Compile Include="frm_Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frm_Main.Designer.cs">
       <DependentUpon>frm_Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_Preferences.cs" />
+    <Compile Include="frm_Preferences.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frm_Preferences.Designer.cs">
       <DependentUpon>frm_Preferences.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_Snipper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_Snipper.Designer.cs">
+      <DependentUpon>frm_Snipper.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,6 +98,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frm_Preferences.resx">
       <DependentUpon>frm_Preferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_Snipper.resx">
+      <DependentUpon>frm_Snipper.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

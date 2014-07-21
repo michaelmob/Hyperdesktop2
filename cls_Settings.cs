@@ -6,8 +6,7 @@ namespace hyperdesktop2
 {
 	public static class Settings
 	{
-		// Unused
-		public static Int32 build = 5;
+		public static Int32 build = 6;
 		public static String build_url = "https://raw.githubusercontent.com/TheTarkus/Hyperdesktop2/master/BUILD";
 		public static String release_url = "https://github.com/TheTarkus/Hyperdesktop2/releases";
 		
@@ -84,7 +83,7 @@ namespace hyperdesktop2
 			launch_browser 			= Global_Func.str_to_bool(Exists("behavior", "launch_browser", "false"));
 			edit_screenshot 		= Global_Func.str_to_bool(Exists("behavior", "edit_screenshot", "true"));
 			
-			screen_res 				= Exists("screen", "screen_res", Snipper.reset_screen_bounds());
+			screen_res 				= Exists("screen", "screen_res", Screen_Bounds.reset());
 		}
 		
 		public static void write_settings()

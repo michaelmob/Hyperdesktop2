@@ -35,9 +35,9 @@ namespace hyperdesktop2
 			numeric_height.Minimum = -50000;
 			
 			try {
-				String[] screen_res = Settings.screen_res.Split(',');
-				numeric_top.Value = Convert.ToDecimal(screen_res[0]);
-				numeric_left.Value = Convert.ToDecimal(screen_res[1]);
+                String[] screen_res = Settings.screen_res.Split(',');
+				numeric_left.Value = Convert.ToDecimal(screen_res[0]);
+				numeric_top.Value = Convert.ToDecimal(screen_res[1]);
 				numeric_width.Value = Convert.ToDecimal(screen_res[2]);
 				numeric_height.Value = Convert.ToDecimal(screen_res[3]);
 			} catch {
@@ -51,13 +51,13 @@ namespace hyperdesktop2
 			// Screen resolution
 			Settings.screen_res 				= Settings.screen_res = String.Format(
 				"{0},{1},{2},{3}",
-				numeric_top.Value,
 				numeric_left.Value,
+				numeric_top.Value,
 				numeric_width.Value,
 				numeric_height.Value
 			);
-			
-			Snipper.load_screen_bounds();
+
+            Screen_Bounds.load();
 			
 			Settings.save_screenshots 			= check_save_screenshots.Checked;
 			Settings.save_folder 				= txt_save_folder.Text;
@@ -100,9 +100,9 @@ namespace hyperdesktop2
 		}
 		void Btn_reset_screenClick(object sender, System.EventArgs e)
 		{
-			String[] screen_res = Snipper.reset_screen_bounds().Split(',');
-			numeric_top.Value = Convert.ToDecimal(screen_res[0]);
-			numeric_left.Value = Convert.ToDecimal(screen_res[1]);
+            String[] screen_res = Screen_Bounds.reset().Split(',');
+            numeric_left.Value = Convert.ToDecimal(screen_res[0]);
+			numeric_top.Value = Convert.ToDecimal(screen_res[1]);
 			numeric_width.Value = Convert.ToDecimal(screen_res[2]);
 			numeric_height.Value = Convert.ToDecimal(screen_res[3]);
 		}

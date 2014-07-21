@@ -73,11 +73,13 @@ namespace hyperdesktop2
 		
 		void Frm_MainLoad(object sender, EventArgs e)
 		{
+            Imgur.web_client.UploadProgressChanged += upload_progress_changed;
+            Imgur.web_client.UploadValuesCompleted += upload_progress_complete;
+
 			Settings.get_settings();
 			tray_icon.Visible = true;
-			
-			Snipper.load_screen_bounds();
-			Snipper.initialize();
+
+            Screen_Bounds.load();
 		}
 		
 		void Frm_MainFormClosing(object sender, FormClosingEventArgs e)
@@ -98,6 +100,13 @@ namespace hyperdesktop2
 		{
 			Process.Start(tray_icon.BalloonTipText);
 		}
+        void inverse_tray_options(object sender, EventArgs e)
+        {
+            minimizeToTrayToolStripMenuItem.Text = (minimizeToTrayToolStripMenuItem.Text == "Open Window") ? "Minimize to Tray" : "Open Window";
+
+            ShowInTaskbar = !ShowInTaskbar;
+            Opacity = Opacity < 1 ? 100 : 0;
+        }
 		#endregion
 		
 		#region Drag and Drop
@@ -147,9 +156,98 @@ namespace hyperdesktop2
 			}
 	    }
 		#endregion
-		
-		#region Upload Images
-		void Btn_browseClick(object sender, EventArgs e)
+
+        #region Image
+
+        Bitmap edit_screenshot(Bitmap bmp)
+        {
+            if (!Settings.edit_screenshot)
+                return null;
+
+            var edit = new frm_Edit(bmp);
+            edit.ShowDialog();
+
+            return edit.Result;
+        }
+
+        void save_screenshot(Bitmap bmp, String name = null)
+        {
+            if (!Settings.save_screenshots)
+                return;
+
+            if (name == null)
+                name = DateTime.Now.ToString("yyyy-MM-dd_HHmmss");
+
+            try
+            {
+                bmp.Save(
+                    String.Format("{0}/{1}.{2}", Settings.save_folder, name, Settings.save_format),
+                    Global_Func.ext_to_imageformat(Settings.save_format)
+                );
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Cannot save image.");
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        void screen_capture(String type)
+        {
+            Bitmap bmp = null;
+
+            switch (type)
+            {
+                case "screen":
+                    bmp = Screen_Capture.screen(Settings.show_cursor);
+                    break;
+
+                case "window":
+                    bmp = Screen_Capture.window(Settings.show_cursor);
+                    break;
+
+                default:
+                    if (snipper_open)
+                        return;
+
+                    snipper_open = true;
+                    var rect = frm_Snipper.get_region();
+
+                    if(rect == new Rectangle(0, 0, 0, 0))
+                        return;
+
+                    bmp = Screen_Capture.region(rect);
+                    snipper_open = false;
+                    break;
+            }
+            work_image(bmp, true);
+        }
+
+        void work_image(Bitmap bmp, Boolean edit = false)
+        {
+            Global_Func.play_sound("capture.wav");
+
+            if (edit)
+                bmp = edit_screenshot(bmp);
+
+            if (bmp == null)
+                return;
+
+            if (Settings.upload_method == "imgur")
+                if (!Imgur.upload(bmp))
+                {
+                    Global_Func.play_sound("error.wav");
+
+                    if (Settings.balloon_messages)
+                        balloon_tip("Error uploading file!", "Error", 2000, ToolTipIcon.Error);
+                }
+
+            save_screenshot(bmp);
+        }
+        #endregion
+        
+        #region Buttons
+        void Btn_browseClick(object sender, EventArgs e)
 		{
 			var dialog = new OpenFileDialog();
 			dialog.Filter = "PNG|*.png|JPG|*.jpg|BMP|*.bmp|All Files (*.*)|*.*"; 
@@ -157,79 +255,7 @@ namespace hyperdesktop2
 			if(dialog.ShowDialog() == DialogResult.OK) {
 				work_image(new Bitmap(Image.FromFile(dialog.FileName)));
 			}	
-		}
-		#endregion
-		
-		#region Screenshot
-		Bitmap edit_screenshot(Bitmap bmp)
-		{
-			if (!Settings.edit_screenshot)
-				return null;
-			
-			var edit = new frm_Edit(bmp);
-			edit.ShowDialog();
-			
-			return edit.Result;
-		}
-		
-		void save_screenshot(Bitmap bmp, String name = null)
-		{
-			if(!Settings.save_screenshots)
-				return;
-			
-			if(name == null)
-				name = DateTime.Now.ToString("yyyy-MM-dd_HHmmss");
-			
-			try {
-				bmp.Save(
-					String.Format("{0}/{1}.{2}", Settings.save_folder, name, Settings.save_format),
-					Global_Func.ext_to_imageformat(Settings.save_format)
-				);
-			} catch (Exception ex) {
-				Console.WriteLine("Cannot save image.");
-				Console.WriteLine(ex.Message);
-			}
-		}
-		
-		void screen_capture(String type)
-		{
-			Bitmap bmp = null;
-			
-			switch(type) {
-				case "screen":
-					bmp = Screen_Capture.screen(Settings.show_cursor);
-					break;
-					
-				case "window":
-					bmp = Screen_Capture.window(Settings.show_cursor);
-					break;
-					
-				default:
-					if(snipper_open)
-						return;
-					
-					snipper_open = true;
-					bmp = Screen_Capture.region(Snipper.get_region());
-					snipper_open = false;
-					break;
-			}
-			work_image(bmp);
-		}
-		
-		void work_image(Bitmap bmp) 
-		{
-			Global_Func.play_sound("capture.wav");
-			
-			bmp = edit_screenshot(bmp);
-		
-			if(bmp == null)
-				return;
-			
-			if(Settings.upload_method == "imgur")
-				imgur_upload(bmp);
-			
-			save_screenshot(bmp);
-		}
+		} 
 		
 		void Btn_captureClick(object sender, EventArgs e) 			{ screen_capture("screen"); }
 		void Btn_windowClick() 										{ screen_capture("window"); }
@@ -255,15 +281,6 @@ namespace hyperdesktop2
 		}
 		#endregion
 		
-		#region Tray Menu
-		void inverse_tray_options(object sender, EventArgs e) {
-			minimizeToTrayToolStripMenuItem.Text = (minimizeToTrayToolStripMenuItem.Text == "Open Window") ? "Minimize to Tray" : "Open Window";
-			
-			ShowInTaskbar = !ShowInTaskbar;
-			Opacity = Opacity < 1 ? 100 : 0;
-		}
-		#endregion
-		
 		#region Image Links Menu
 		void OpenToolStripMenuItemClick(object sender, EventArgs e)
 		{
@@ -280,64 +297,19 @@ namespace hyperdesktop2
 			if(list_image_links.SelectedItems.Count <= 0)
 				return;
 			
-			if(imgur_delete(list_image_links.SelectedItems[0].SubItems[1].Text))
+			if(Imgur.delete(list_image_links.SelectedItems[0].SubItems[1].Text))
 				list_image_links.SelectedItems[0].Remove();
+            else
+            {
+                Global_Func.play_sound("error.wav");
+
+                if (Settings.balloon_messages)
+                    balloon_tip("Could not delete file!", "Error", 2000, ToolTipIcon.Error);
+            }
 		}
 		#endregion
 		
-		#region Imgur Uploading
-		void imgur_upload(Bitmap bmp)
-		{
-			try {
-				var web_client = new WebClient();
-				var data = new NameValueCollection();
-				
-				web_client.UploadProgressChanged += upload_progress_changed;
-				web_client.UploadValuesCompleted += upload_progress_complete;
-				
-				var image = Global_Func.bmp_to_base64(bmp, Global_Func.ext_to_imageformat(Settings.upload_format));
-				data.Add("image", image);
-				
-				web_client.Headers.Add("Authorization", "Client-ID " + Settings.imgur_client_id);
-				web_client.UploadValuesAsync(
-					new Uri("https://api.imgur.com/3/image/"),
-					"POST",
-					data
-				);
-				
-				web_client.Dispose();
-			} catch {
-				Global_Func.play_sound("error.wav");
-				
-				if(Settings.balloon_messages)
-					balloon_tip("Error uploading file!", "Error", 2000, ToolTipIcon.Error);
-			}
-		}
-		
-		Boolean imgur_delete(String delete_hash) 
-		{
-			try {
-				var web_client = new WebClient();
-				
-				web_client.Headers.Add("Authorization", "Client-ID " + Settings.imgur_client_id);
-				web_client.UploadData(
-					new Uri("https://api.imgur.com/3/image/" + delete_hash),
-					"DELETE",
-					new Byte[] { 0x0 }
-				);
-				
-				web_client.Dispose();
-				return true;
-			} catch {
-				Global_Func.play_sound("error.wav");
-				
-				if(Settings.balloon_messages)
-					balloon_tip("Could not delete file!", "Error", 2000, ToolTipIcon.Error);
-				
-				return false;
-			}
-		}
-		
+		#region Progress Bar
 		void upload_progress_changed(object sender, UploadProgressChangedEventArgs e)
 		{
 			try {
@@ -348,8 +320,7 @@ namespace hyperdesktop2
 				// below .NET 4.0, sometimes it throws an absurd
 				// number into the ProgressPercentage
 			}
-		}
-		
+		}		
 		void upload_progress_complete(object sender, UploadValuesCompletedEventArgs e)
 		{
 			group_upload_progress.Text = "Upload Progress";

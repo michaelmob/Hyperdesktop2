@@ -14,17 +14,30 @@ namespace hyperdesktop2
 		static Color pen_color = Color.Red;
 		static Int16 pen_size = 5;
 		Graphics g;
-		Point temp_point_1, temp_point_2;
+		Point point_1, point_2;
 		Font font;
 		Pen pen = new Pen(pen_color);
 		SolidBrush brush = new SolidBrush(pen_color);
 		Boolean using_pen = true;
+
+        Dictionary<string, int> sizes = new Dictionary<string, int>();
 		
 		public Bitmap Result { set; get; }
 		
 		public frm_Edit(Bitmap _bmp, Font _font = null, Boolean _drop_shadow = false)
 		{
 			InitializeComponent();
+
+            sizes.Add("Pixel", 1);
+            sizes.Add("Small", 5);
+            sizes.Add("Medium", 12);
+            sizes.Add("Large", 24);
+            sizes.Add("Huge", 32);
+            sizes.Add("Massive", 64);
+
+            foreach (KeyValuePair<string, int> pair in sizes)
+                drop_size.Items.Add(pair.Key);
+
 			undo = new List<Bitmap>();
 			undo.Add(new Bitmap(_bmp));
 			
@@ -37,6 +50,7 @@ namespace hyperdesktop2
 			// Set picture to the one we just recieved
 			picture_box.SizeMode = PictureBoxSizeMode.AutoSize;
 			picture_box.Image = new Bitmap(undo[0]);
+            drop_color.Text = "Red";
 			
 			// Set control defaults
 			drop_size.SelectedIndex = 1;
@@ -61,44 +75,19 @@ namespace hyperdesktop2
 		void Btn_penClick(object sender, EventArgs e) { using_pen = true; }
 		void Btn_insertClick(object sender, EventArgs e) {
 			using_pen = false;
-			drop_size.Text = "25px";
 			Drop_sizeSelectedIndexChanged(sender, e);
 		}
 		
 		void Drop_sizeSelectedIndexChanged(object sender, EventArgs e)
 		{
-			pen_size = Convert.ToInt16(Regex.Replace(drop_size.Text, "[A-z]", ""));
-			font = new Font("Arial", pen_size);
+			pen_size = Convert.ToInt16(sizes[drop_size.Text]);
+			font = new Font("Arial", pen_size + 12);
 		}
 		
 		void Drop_colorSelectedIndexChanged(object sender, EventArgs e)
 		{
-			switch(drop_color.Text) {
-				case "Black":
-					pen_color = Color.Black;
-					brush = new SolidBrush(Color.Black); 
-					break;
-				case "Blue":
-					pen_color = Color.Blue;
-					brush = new SolidBrush(Color.Blue); 
-					break;
-				case "Green":
-					pen_color = Color.Green;
-					brush = new SolidBrush(Color.Green); 
-					break;
-				case "White":
-					pen_color = Color.White;
-					brush = new SolidBrush(Color.White); 
-					break;
-				case "Yellow":
-					pen_color = Color.Yellow;
-					brush = new SolidBrush(Color.Yellow); 
-					break;
-				default:
-					pen_color = Color.Red;
-					brush = new SolidBrush(Color.Red); 
-					break;
-			}
+            pen_color = Color.FromName(drop_color.Text);
+            brush = new SolidBrush(pen_color); 
 		}
 		#endregion
 		
@@ -133,12 +122,12 @@ namespace hyperdesktop2
 				g = Graphics.FromImage(picture_box.Image);
 				
 				if(check_drop_shadow.Checked)
-					g.DrawString(text_insert.Text, font, new SolidBrush(Color.Black), temp_point_2.X + 1, temp_point_2.Y + 1);
+					g.DrawString(text_insert.Text, font, new SolidBrush(Color.Black), point_2.X + 1, point_2.Y + 1);
 			
-				g.DrawString(text_insert.Text, font, brush, temp_point_2.X, temp_point_2.Y);
-			}
+				g.DrawString(text_insert.Text, font, brush, point_2.X, point_2.Y);
+            }
 			
-			temp_point_1 = e.Location;
+			point_1 = e.Location;
 			pen = new Pen(pen_color, pen_size);	
 		}
 		
@@ -157,10 +146,10 @@ namespace hyperdesktop2
 		}
 		#endregion
 		
-		#region Mouse movements & Paint
+		#region Mouse Movements & Paint
 		void Picture_boxMouseMove(object sender, MouseEventArgs e)
 		{
-			temp_point_2 = e.Location;
+			point_2 = e.Location;
 			picture_box.Invalidate();
 			
 			if (!(e.Button == MouseButtons.Left && using_pen))
@@ -172,12 +161,12 @@ namespace hyperdesktop2
 				g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                 g.FillEllipse(
 					new SolidBrush(pen_color),
-					temp_point_2.X - Convert.ToInt32(pen_size / 2),
-					temp_point_2.Y - Convert.ToInt32(pen_size / 2),
+					point_2.X - Convert.ToInt32(pen_size / 2),
+					point_2.Y - Convert.ToInt32(pen_size / 2),
 					pen_size, pen_size
 				);
-				g.DrawLine(pen, temp_point_1, temp_point_2);
-        		temp_point_1 = e.Location;
+				g.DrawLine(pen, point_1, point_2);
+        		point_1 = e.Location;
 			} catch (Exception ex) {
 				Console.WriteLine(ex.Message);
 			}
@@ -200,21 +189,28 @@ namespace hyperdesktop2
 				if(using_pen)
 					e.Graphics.FillEllipse(
 						new SolidBrush(pen_color),
-						temp_point_2.X - Convert.ToInt32(pen_size / 2),
-						temp_point_2.Y - Convert.ToInt32(pen_size / 2),
+						point_2.X - Convert.ToInt32(pen_size / 2),
+						point_2.Y - Convert.ToInt32(pen_size / 2),
 						pen_size, pen_size
 					);
 				else {
 					if(check_drop_shadow.Checked)
-						e.Graphics.DrawString(text_insert.Text, font, new SolidBrush(Color.Black), temp_point_2.X + 1, temp_point_2.Y + 1);
+						e.Graphics.DrawString(text_insert.Text, font, new SolidBrush(Color.Black), point_2.X + 1, point_2.Y + 1);
 					
-					e.Graphics.DrawString(text_insert.Text, font, brush, temp_point_2.X, temp_point_2.Y);
+					e.Graphics.DrawString(text_insert.Text, font, brush, point_2.X, point_2.Y);
 				}
 			} catch (Exception ex) {
 				Console.WriteLine(ex.Message);
 			}
 		}
 		#endregion
-		
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys key)
+        {
+            if (key == Keys.Escape)
+                this.DialogResult = DialogResult.Cancel;
+
+            return base.ProcessCmdKey(ref msg, key);
+        }
 	}
 }
