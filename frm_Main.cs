@@ -314,7 +314,7 @@ namespace hyperdesktop2
 		{
 			try {
 				Int32 percent = Convert.ToInt32(e.BytesSent / e.TotalBytesToSend) * 100;
-				group_upload_progress.Text = String.Format("Upload Progress - {0}% ({1}kb/{2}kb)", percent, e.BytesSent / 1024, e.TotalBytesToSend / 1024d);
+				group_upload_progress.Text = String.Format("Upload Progress - {0}% ({1}kb/{2}kb)", percent, e.BytesSent / 1024, e.TotalBytesToSend / 1024);
 				progress.Value = percent;
 			} catch {
 				// below .NET 4.0, sometimes it throws an absurd

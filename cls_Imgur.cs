@@ -27,7 +27,7 @@ namespace hyperdesktop2
                     data
                 );
 
-                web_client.Dispose();
+                web_client.Headers.Remove("Authorization");
             }
             catch
             {
