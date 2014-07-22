@@ -6,7 +6,7 @@ namespace hyperdesktop2
 {
 	public static class Settings
 	{
-		public static Int32 build = 6;
+		public static Int32 build = 7;
 		public static String build_url = "https://raw.githubusercontent.com/TheTarkus/Hyperdesktop2/master/BUILD";
 		public static String release_url = "https://github.com/TheTarkus/Hyperdesktop2/releases";
 		
