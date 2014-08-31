@@ -1,4 +1,4 @@
 Hyperdesktop2
 =============
 
-The unofficial sequel to the now-discontinued Hyperdesktop.
+New -> https://github.com/TheTarkus/Hyperdesktop
