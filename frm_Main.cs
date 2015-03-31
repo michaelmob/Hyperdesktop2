@@ -328,7 +328,7 @@ namespace hyperdesktop2
 			
 			String response = Encoding.UTF8.GetString(e.Result);
 			
-			String delete_hash 	= Global_Func.get_text_inbetween(response, "deletehash\":\"", "\",\"link\"").Replace("\\", "");
+			String delete_hash = Global_Func.get_text_inbetween(response, "deletehash\":\"", "\",\"name\"").Replace("\\", "");
 			String link 		= Global_Func.get_text_inbetween(response, "link\":\"", "\"}").Replace("\\", "");
 			
 			list_image_links.Items.Add(
