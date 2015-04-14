@@ -1,4 +1,6 @@
 Hyperdesktop2
 =============
 
-New -> https://github.com/TheTarkus/Hyperdesktop
+No longer supported.
+
+Try ShareX -> https://getsharex.com/
